@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Как я провел лето - Oneshot Style</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: url('background_dark.jpg') center/cover fixed;
+            min-height: 100vh;
+            color: #f0f0f0;
+            transition: background 0.5s ease-in-out;
+        }
+
+        body.light-theme {
+            background: url('background_light.jpg') center/cover fixed;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Левое меню - изменен цвет на серый */
+        .left-sidebar {
+            background: rgba(80, 80, 80, 0.9);
+            border: 2px solid #a0a0a0;
+            border-radius: 15px;
+            padding: 20px;
+            height: fit-content;
+            box-shadow: 0 0 20px rgba(160, 160, 160, 0.2);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 20px;
+        }
+
+        .side-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .side-btn {
+            background: linear-gradient(135deg, #606060 0%, #505050 100%);
+            border: 2px solid #a0a0a0;
+            border-radius: 8px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #f0f0f0;
+            font-size: 1em;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .side-btn:hover {
+            background: linear-gradient(135deg, #707070 0%, #606060 100%);
+            transform: translateX(5px);
+            box-shadow: 0 0 15px rgba(160, 160, 160, 0.3);
+        }
+
+        /* Кнопки мини-игр - теперь в ряд */
+        .games-container {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .game-btn {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            border: 2px solid #a0a0a0;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.4);
+        }
+
+        .game-btn.aimlabs {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .game-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .game-label {
+            font-size: 0.8em;
+            color: #c8c8c8;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        /* Основной контент */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+            background: rgba(80, 80, 80, 0.8);
+            border: 2px solid #a0a0a0;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            min-height: 120px;
+            cursor: pointer;
+        }
+
+        .logo-text {
+            font-size: 2.8em;
+            color: #f0f0f0;
+            text-shadow: 0 0 10px rgba(240, 240, 240, 0.5);
+            margin: 0 auto;
+        }
+
+        .logo-image img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover .logo-image img {
+            transform: scale(1.1);
+        }
+
+        .page {
+            display: none;
+            padding: 40px;
+            background: rgba(80, 80, 80, 0.8);
+            border: 2px solid #a0a0a0;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            min-height: 400px;
+        }
+
+        .page h2 {
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 2.2em;
+            color: #f0f0f0;
+            border-bottom: 2px solid #a0a0a0;
+            padding-bottom: 15px;
+        }
+
+        /* Стили для вкладки Игры */
+        .games-section-title {
+            text-align: center;
+            font-size: 1.8em;
+            color: #f0f0f0;
+            margin-bottom: 30px;
+            padding: 10px;
+            background: rgba(70, 70, 70, 0.6);
+            border-radius: 10px;
+            border: 1px solid #a0a0a0;
+        }
+
+        .games-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .game-tile {
+            flex: 1;
+            background: rgba(70, 70, 70, 0.7);
+            border: 2px solid #a0a0a0;
+            border-radius: 12px;
+            padding: 15px;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .game-tile:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(160, 160, 160, 0.2);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 150px;
+            background-color: #505050;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: #a0a0a0;
+            overflow: hidden;
+        }
+
+        .game-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .game-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #f0f0f0;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .game-description {
+            color: #d0d0d0;
+            font-size: 0.9em;
+            line-height: 1.4;
+            flex-grow: 1;
+        }
+
+        .other-games {
+            background: rgba(70, 70, 70, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #a0a0a0;
+        }
+
+        .other-games h3 {
+            color: #f0f0f0;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .other-games p {
+            color: #d0d0d0;
+            line-height: 1.6;
+        }
+
+        /* Модальные окна - изменен цвет на серый */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: rgba(80, 80, 80, 0.95);
+            border: 3px solid #a0a0a0;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 0 30px rgba(160, 160, 160, 0.3);
+        }
+
+        .modal h3 {
+            color: #f0f0f0;
+            margin-bottom: 20px;
+        }
+
+        .captcha-input {
+            padding: 12px;
+            font-size: 1.2em;
+            border: 2px solid #a0a0a0;
+            border-radius: 8px;
+            background: #505050;
+            color: #f0f0f0;
+            margin: 10px 0;
+            width: 200px;
+        }
+
+        .modal-btn {
+            background: linear-gradient(135deg, #606060 0%, #505050 100%);
+            border: 2px solid #a0a0a0;
+            border-radius: 8px;
+            padding: 12px 25px;
+            color: #f0f0f0;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: all 0.2s ease;
+        }
+
+        .modal-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(160, 160, 160, 0.3);
+        }
+
+        /* Рулетка - изменен цвет на серый */
+        .roulette-game {
+            background: rgba(80, 80, 80, 0.95);
+            border: 3px solid #a0a0a0;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            width: 600px;
+            max-width: 90vw;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .balance {
+            font-weight: bold;
+            color: #2ecc71;
+        }
+
+        .bet-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .bet-amount {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #f39c12;
+        }
+
+        .bet-btn {
+            background: linear-gradient(135deg, #606060 0%, #505050 100%);
+            border: 2px solid #a0a0a0;
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: #f0f0f0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .bet-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 8px rgba(160, 160, 160, 0.3);
+        }
+
+        .betting-area {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .bet-field {
+            width: 120px;
+            height: 120px;
+            border: 3px solid #a0a0a0;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .bet-field.red {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+        }
+
+        .bet-field.black {
+            background: linear-gradient(135deg, #505050 0%, #000000 100%);
+            color: white;
+        }
+
+        .bet-field.selected {
+            box-shadow: 0 0 20px rgba(247, 220, 111, 0.8);
+            border-color: #f7dc6f;
+        }
+
+        .bet-field:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(160, 160, 160, 0.4);
+        }
+
+        .spin-btn {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            border: 2px solid #a0a0a0;
+            border-radius: 8px;
+            padding: 12px 30px;
+            color: #f0f0f0;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 15px 0;
+            transition: all 0.2s ease;
+        }
+
+        .spin-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.4);
+        }
+
+        .result-display {
+            margin: 15px 0;
+            padding: 12px;
+            background: rgba(96, 96, 96, 0.5);
+            border-radius: 8px;
+            border: 2px solid #a0a0a0;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .result-text {
+            font-size: 1.1em;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .win { color: #2ecc71; }
+        .lose { color: #e74c3c; }
+
+        .money-maker {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(96, 96, 96, 0.5);
+            border-radius: 8px;
+            border: 2px solid #a0a0a0;
+        }
+
+        .dodep-btn {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            border: 2px solid #a0a0a0;
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: #f0f0f0;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .dodep-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(243, 156, 18, 0.4);
+        }
+
+        /* AimLabs - изменен цвет на серый */
+        .aim-game {
+            background: rgba(80, 80, 80, 0.95);
+            border: 3px solid #a0a0a0;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            width: 800px;
+            max-width: 90vw;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .game-area {
+            position: relative;
+            width: 700px;
+            height: 400px;
+            background: rgba(96, 96, 96, 0.5);
+            border: 2px solid #a0a0a0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px auto;
+        }
+
+        .target {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #e74c3c 0%, #c0392b 70%);
+            border: 2px solid #a0a0a0;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        .target:hover {
+            transform: scale(1.1);
+        }
+
+        .crosshair {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+            border: 2px solid #a0a0a0;
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #505050;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #e74c3c 0%, #f39c12 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(96, 96, 96, 0.5);
+            border-radius: 10px;
+            border: 2px solid #a0a0a0;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px rgba(240, 240, 240, 0.3); }
+            50% { text-shadow: 0 0 20px rgba(240, 240, 240, 0.6); }
+        }
+
+        .glow {
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        /* Секретная кнопка - ВСЕГДА становится видимой при наведении */
+        .secret-button {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        .secret-button:hover {
+            opacity: 1 !important; /* Важно: всегда показывать при наведении */
+        }
+
+        .secret-button img {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Темный фильтр - 75% затемнения */
+        .dark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 10000;
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .dark-overlay.active {
+            opacity: 1;
+        }
+
+        /* Секретный текст */
+        .secret-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-family: 'Courier New', monospace;
+            font-size: 24px;
+            text-align: center;
+            z-index: 10001;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+        }
+
+        .secret-text.visible {
+            opacity: 1;
+        }
+
+        /* Модальное окно для ввода кода */
+        .code-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10002;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .code-modal-content {
+            background: rgba(80, 80, 80, 0.95);
+            border: 3px solid #a0a0a0;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 0 30px rgba(160, 160, 160, 0.3);
+        }
+
+        .code-input {
+            padding: 12px;
+            font-size: 1.2em;
+            border: 2px solid #a0a0a0;
+            border-radius: 8px;
+            background: #505050;
+            color: #f0f0f0;
+            margin: 10px 0;
+            width: 200px;
+        }
+
+        .code-submit {
+            background: linear-gradient(135deg, #606060 0%, #505050 100%);
+            border: 2px solid #a0a0a0;
+            border-radius: 8px;
+            padding: 12px 25px;
+            color: #f0f0f0;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: all 0.2s ease;
+        }
+
+        .code-submit:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(160, 160, 160, 0.3);
+        }
+
+        .code-error {
+            color: #e74c3c;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Аудио элементы для звуков -->
+    <audio id="hoverSound" preload="auto">
+        <source src="cursor.wav" type="audio/mpeg">
+    </audio>
+    <audio id="clickSound" preload="auto">
+        <source src="select.wav" type="audio/mpeg">
+    </audio>
+    <audio id="cancelSound" preload="auto">
+        <source src="quit.wav" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <!-- Левое меню -->
+        <div class="left-sidebar">
+            <div class="side-menu">
+                <div class="side-btn" onclick="showPage('trips'); playClickSound()" onmouseover="playHoverSound()">Поездки</div>
+                <div class="side-btn" onclick="showPage('media'); playClickSound()" onmouseover="playHoverSound()">Фильмы, сериалы, аниме</div>
+                <div class="side-btn" onclick="showPage('games'); playClickSound()" onmouseover="playHoverSound()">Игры</div>
+                <div class="side-btn" onclick="showPage('it'); playClickSound()" onmouseover="playHoverSound()">IT-деятельность</div>
+                <div class="side-btn" onclick="showPage('achievements'); playClickSound()" onmouseover="playHoverSound()">Похвастаться</div>
+                <div class="side-btn" onclick="showPage('sufferings'); playClickSound()" onmouseover="playHoverSound()">Страдания</div>
+            </div>
+            
+            <!-- Кнопки мини-игр - теперь в ряд -->
+            <div class="games-container">
+                <div>
+                    <div class="game-btn" onclick="showCaptcha('roulette'); playClickSound()" onmouseover="playHoverSound()">🎰</div>
+                    <div class="game-label">Рулетка</div>
+                </div>
+                <div>
+                    <div class="game-btn aimlabs" onclick="showCaptcha('aim'); playClickSound()" onmouseover="playHoverSound()">🎯</div>
+                    <div class="game-label">AimLabs</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Основной контент -->
+        <div class="main-content">
+            <!-- Логотип -->
+            <div class="logo-container" onclick="toggleLamp()">
+                <div class="logo-image">
+                    <img id="lampImage" src="lamp_off.png" alt="Лето 2024">
+                </div>
+                <div class="logo-text glow">Моё Лето 2024</div>
+            </div>
+
+            <!-- Страницы -->
+            <div id="trips" class="page">
+                <h2>Мои летние поездки</h2>
+                <div class="content">
+                    <p>Здесь будет информация о ваших летных путешествиях...</p>
+                </div>
+            </div>
+
+            <div id="media" class="page">
+                <h2>Просмотренное летом</h2>
+                <div class="content">
+                    <p>Здесь будет список фильмов, сериалов и аниме...</p>
+                </div>
+            </div>
+
+            <div id="games" class="page">
+                <h2>Летные игры</h2>
+                <div class="games-section-title">Любимые игры</div>
+                
+                <div class="games-grid">
+                    <div class="game-tile">
+                        <div class="game-image">
+                            <img src="cs2.jpg" alt="Counter-Strike 2" onerror="this.style.display='none'; this.parentElement.innerHTML='🎮';">
+                        </div>
+                        <div class="game-title">Counter-Strike 2</div>
+                        <div class="game-description">
+                            ...
+                        </div>
+                    </div>
+                    
+                    <div class="game-tile">
+                        <div class="game-image">
+                            <img src="ONESHOT.jpg" alt="OneShot" onerror="this.style.display='none'; this.parentElement.innerHTML='🎮';">
+                        </div>
+                        <div class="game-title">OneShot</div>
+                        <div class="game-description">
+                            ...
+                        </div>
+                    </div>
+                    
+                    <div class="game-tile">
+                        <div class="game-image">
+                            <img src="eft.jpg" alt="EFT" onerror="this.style.display='none'; this.parentElement.innerHTML='🎮';">
+                        </div>
+                        <div class="game-title">Escape From Tarkov</div>
+                        <div class="game-description">
+                            ...
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="other-games">
+                    <h3>Другие игры</h3>
+                    <p>Также иногда играю в Valorant, Overwatch, GTA V и различные инди-игры. Эти игры не занимают много времени, но иногда бывают интересны для разнообразия.</p>
+                </div>
+            </div>
+
+            <div id="it" class="page">
+                <h2>IT деятельность</h2>
+                <div class="content">
+                    <p>Здесь будет описание ваших IT-достижений...</p>
+                </div>
+            </div>
+
+            <div id="achievements" class="page">
+                <h2>Мои достижения</h2>
+                <div class="content">
+                    <p>Здесь можно похвастаться успехами...</p>
+                </div>
+            </div>
+
+            <div id="sufferings" class="page">
+                <h2>Летные трудности</h2>
+                <div class="content">
+                    <p>Здесь можно рассказать о трудностях...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно капчи -->
+    <div id="captchaModal" class="modal">
+        <div class="modal-content">
+            <h3>Проверка на человека</h3>
+            <p>Решите пример: <strong id="captchaExample">10 + 15</strong></p>
+            <input type="number" id="captchaInput" class="captcha-input" placeholder="Введите ответ">
+            <div>
+                <button class="modal-btn" onclick="checkCaptcha(); playClickSound()" onmouseover="playHoverSound()">Проверить</button>
+                <button class="modal-btn" onclick="hideModalWithSound('captchaModal')" onmouseover="playHoverSound()">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Мини-игра Рулетка -->
+    <div id="rouletteGame" class="modal">
+        <div class="roulette-game">
+            <h3>🎰 Казино Рулетка 🎰</h3>
+            
+            <div class="game-info">
+                <div>Баланс: <span class="balance" id="balance">200</span> ₽</div>
+                <div>Ставка: <span class="bet-amount" id="betAmount">10</span> ₽</div>
+            </div>
+
+            <div class="bet-controls">
+                <button class="bet-btn" onclick="changeBet(-10); playCancelSound()" onmouseover="playHoverSound()">-10</button>
+                <button class="bet-btn" onclick="changeBet(-5); playCancelSound()" onmouseover="playHoverSound()">-5</button>
+                <button class="bet-btn" onclick="changeBet(5); playClickSound()" onmouseover="playHoverSound()">+5</button>
+                <button class="bet-btn" onclick="changeBet(10); playClickSound()" onmouseover="playHoverSound()">+10</button>
+            </div>
+
+            <div class="betting-area">
+                <div class="bet-field red" onclick="selectColor('red'); playClickSound()" onmouseover="playHoverSound()">КРАСНОЕ</div>
+                <div class="bet-field black" onclick="selectColor('black'); playClickSound()" onmouseover="playHoverSound()">ЧЁРНОЕ</div>
+            </div>
+
+            <button class="spin-btn" id="spinBtn" onclick="spinRoulette(); playClickSound()" onmouseover="playHoverSound()">Крутить</button>
+
+            <div class="result-display">
+                <div class="result-text" id="resultText">Сделайте ставку на цвет и крутите!</div>
+            </div>
+
+            <div class="money-maker">
+                <h4>Заработать деньги:</h4>
+                <button class="dodep-btn" onclick="makeMoney()" onmouseover="playHoverSound()">Додеп (+2 ₽)</button>
+            </div>
+
+            <div>
+                <button class="modal-btn" onclick="hideModalWithSound('rouletteGame')" onmouseover="playHoverSound()">Выйти</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Мини-игра AimLabs -->
+    <div id="aimGame" class="modal">
+        <div class="aim-game">
+            <h3>🎯 AimLabs Тренировка 🎯</h3>
+            
+            <div class="game-stats">
+                <div>Попадания: <span id="hits">0</span></div>
+                <div>Промахи: <span id="misses">0</span></div>
+                <div>Время: <span id="timer">30</span>s</div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress" id="gameProgress"></div>
+            </div>
+
+            <div class="game-area" id="gameArea">
+                <div class="crosshair" id="crosshair"></div>
+            </div>
+
+            <div>
+                <button class="modal-btn" onclick="startAimGame(); playClickSound()" onmouseover="playHoverSound()">Начать игру</button>
+                <button class="modal-btn" onclick="hideModalWithSound('aimGame')" onmouseover="playHoverSound()">Выйти</button>
+            </div>
+
+            <div class="results" id="aimResults" style="display: none;">
+                <h4>Результаты:</h4>
+                <div>Точность: <span id="accuracy">0%</span></div>
+                <div>Общий счет: <span id="totalScore">0</span></div>
+                <div>Попаданий: <span id="finalHits">0</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Секретные элементы -->
+    <div class="dark-overlay" id="darkOverlay"></div>
+    
+    <div class="secret-text" id="secretText"></div>
+    
+    <div class="code-modal" id="codeModal">
+        <div class="code-modal-content">
+            <h3>Введите код</h3>
+            <input type="text" class="code-input" id="codeInput" placeholder="Введите код">
+            <div>
+                <button class="modal-btn" onclick="checkCode()">Подтвердить</button>
+                <button class="modal-btn" onclick="closeModal('codeModal')">Отмена</button>
+            </div>
+            <div class="code-error" id="codeError">Неверный код!</div>
+        </div>
+    </div>
+
+    <!-- Секретная кнопка (будет перемещаться скриптом) -->
+    <div class="secret-button" id="secretButton">
+        <img src="clover.png" alt="Секретная кнопка">
+    </div>
+
+    <!-- Аудио для музыки -->
+    <audio id="secretMusic" loop>
+        <source src="top_secret.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Глобальные переменные
+        let currentGameType = '';
+        let balance = 200;
+        let currentBet = 10;
+        let selectedColor = null;
+        let isSpinning = false;
+        let captchaAnswer = 0;
+
+        // Переменные для AimLabs
+        let aimGameActive = false;
+        let hits = 0;
+        let misses = 0;
+        let timeLeft = 30;
+        let gameTimer;
+        let targetTimer;
+        let currentTargets = [];
+
+        // Переменная для состояния лампочки
+        let isLampOn = true;
+
+        // Секретные переменные
+        const secretButton = document.getElementById('secretButton');
+        const darkOverlay = document.getElementById('darkOverlay');
+        const secretText = document.getElementById('secretText');
+        const secretMusic = document.getElementById('secretMusic');
+        const codeModal = document.getElementById('codeModal');
+        
+        let secretClickCount = 0;
+        let currentTextIndex = 0;
+        let secretClickHandler = null;
+        
+        // Позиции углов экрана
+        const corners = [
+            { top: '10px', left: '10px' },     // левый верхний
+            { top: '10px', right: '10px' },    // правый верхний
+            { bottom: '10px', left: '10px' },  // левый нижний
+            { bottom: '10px', right: '10px' }  // правый нижний
+        ];
+        
+        // Тексты для каждого уровня
+        const secretTexts = [
+            [
+                "Как ты сюда попал?",
+                "Тебе нельзя тут находиться.",
+                "Немедленно покинь это место."
+            ],
+            [
+                "Ты опять здесь? Что ты пытаешься найти?",
+                "Здесь нет того, что тебе нужно.",
+                "Уходи и никогда больше сюда не возвращайся."
+            ],
+            [
+                "Какой же ты настойчивый. Впечатляет. То, что ты ищешь, закрыто на секретный код.",
+                "Введи его после закрытия этого окна.",
+                "За кодом обращаться к создателю сайта."
+            ]
+        ];
+
+        // Функция переключения лампочки и фона
+        function toggleLamp() {
+            const lampImage = document.getElementById('lampImage');
+            const body = document.body;
+            
+            if (isLampOn) {
+                // Выключаем лампочку - ночной фон
+                lampImage.src = 'lamp_off.png';
+                body.classList.remove('light-theme');
+                playCancelSound();
+            } else {
+                // Включаем лампочку - дневной фон
+                lampImage.src = 'lamp_on.png';
+                body.classList.add('light-theme');
+                playClickSound();
+            }
+            isLampOn = !isLampOn;
+        }
+
+        // Функции для звуков
+        function playHoverSound() {
+            const sound = document.getElementById('hoverSound');
+            sound.currentTime = 0;
+            sound.volume = 0.3;
+            sound.play().catch(e => console.log('Audio play error:', e));
+        }
+
+        function playClickSound() {
+            const sound = document.getElementById('clickSound');
+            sound.currentTime = 0;
+            sound.volume = 0.5;
+            sound.play().catch(e => console.log('Audio play error:', e));
+        }
+
+        function playCancelSound() {
+            const sound = document.getElementById('cancelSound');
+            sound.currentTime = 0;
+            sound.volume = 0.4;
+            sound.play().catch(e => console.log('Audio play error:', e));
+        }
+
+        // Функции для мини-игр
+        function showCaptcha(gameType) {
+            currentGameType = gameType;
+            const num1 = Math.floor(Math.random() * 90) + 10;
+            const num2 = Math.floor(Math.random() * 90) + 10;
+            captchaAnswer = num1 + num2;
+            
+            document.getElementById('captchaExample').textContent = `${num1} + ${num2}`;
+            document.getElementById('captchaInput').value = '';
+            showModal('captchaModal');
+        }
+
+        function checkCaptcha() {
+            const input = parseInt(document.getElementById('captchaInput').value);
+            
+            if (input === captchaAnswer) {
+                hideModal('captchaModal');
+                setTimeout(() => {
+                    if (currentGameType === 'roulette') {
+                        showModal('rouletteGame');
+                        resetRouletteGame();
+                    } else if (currentGameType === 'aim') {
+                        showModal('aimGame');
+                        resetAimGame();
+                    }
+                }, 500);
+            } else {
+                alert('Неверно! Попробуйте еще раз.');
+            }
+        }
+
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function hideModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function hideModalWithSound(modalId) {
+            playCancelSound();
+            hideModal(modalId);
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.style.display = 'none';
+            });
+            document.getElementById(pageId).style.display = 'block';
+        }
+
+        // Функции для Рулетки
+        function resetRouletteGame() {
+            balance = 200;
+            currentBet = 10;
+            selectedColor = null;
+            isSpinning = false;
+            
+            updateBalance();
+            updateBetDisplay();
+            document.getElementById('resultText').textContent = 'Сделайте ставку на цвет и крутите!';
+            document.getElementById('resultText').className = '';
+            
+            document.querySelectorAll('.bet-field').forEach(field => {
+                field.classList.remove('selected');
+            });
+            
+            updateSpinButton();
+        }
+
+        function updateBalance() {
+            document.getElementById('balance').textContent = balance;
+        }
+
+        function updateBetDisplay() {
+            document.getElementById('betAmount').textContent = currentBet;
+        }
+
+        function changeBet(amount) {
+            if (isSpinning) return;
+            
+            const newBet = currentBet + amount;
+            if (newBet >= 5 && newBet <= balance) {
+                currentBet = newBet;
+                updateBetDisplay();
+                updateSpinButton();
+            }
+        }
+
+        function selectColor(color) {
+            if (isSpinning) return;
+            
+            selectedColor = color;
+            document.querySelectorAll('.bet-field').forEach(field => {
+                field.classList.remove('selected');
+            });
+            document.querySelector(`.bet-field.${color}`).classList.add('selected');
+            updateSpinButton();
+        }
+
+        function updateSpinButton() {
+            const spinBtn = document.getElementById('spinBtn');
+            spinBtn.disabled = isSpinning || !selectedColor || currentBet > balance || currentBet < 5;
+        }
+
+        function spinRoulette() {
+            if (isSpinning || !selectedColor || currentBet > balance) return;
+            
+            isSpinning = true;
+            balance -= currentBet;
+            updateBalance();
+            updateSpinButton();
+            
+            // Показываем сообщение о вращении
+            document.getElementById('resultText').textContent = 'Колесо вращается...';
+            document.getElementById('resultText').className = '';
+            
+            // Через 1 секунду показываем результат
+            setTimeout(() => {
+                const resultColor = Math.random() < 0.5 ? 'red' : 'black';
+                const isWin = resultColor === selectedColor;
+                const winAmount = isWin ? currentBet * 2 : 0;
+                
+                if (isWin) {
+                    balance += winAmount;
+                    document.getElementById('resultText').textContent = `Вы выиграли ${winAmount} ₽! Выпало: ${resultColor === 'black' ? 'чёрное' : 'красное'}`;
+                    document.getElementById('resultText').className = 'win';
+                } else {
+                    document.getElementById('resultText').textContent = `Вы проиграли ${currentBet} ₽. Выпало: ${resultColor === 'black' ? 'чёрное' : 'красное'}`;
+                    document.getElementById('resultText').className = 'lose';
+                }
+                
+                updateBalance();
+                isSpinning = false;
+                updateSpinButton();
+                
+            }, 1000);
+        }
+
+        function makeMoney() {
+            balance += 2;
+            updateBalance();
+            updateSpinButton();
+        }
+
+        // Функции для AimLabs
+        function resetAimGame() {
+            aimGameActive = false;
+            hits = 0;
+            misses = 0;
+            timeLeft = 30;
+            
+            document.getElementById('hits').textContent = '0';
+            document.getElementById('misses').textContent = '0';
+            document.getElementById('timer').textContent = '30';
+            document.getElementById('gameProgress').style.width = '0%';
+            document.getElementById('aimResults').style.display = 'none';
+            
+            currentTargets.forEach(target => target.remove());
+            currentTargets = [];
+        }
+
+        function startAimGame() {
+            resetAimGame();
+            aimGameActive = true;
+            
+            gameTimer = setInterval(updateAimTimer, 1000);
+            targetTimer = setInterval(createTarget, 800);
+            
+            document.getElementById('gameArea').addEventListener('mousemove', updateCrosshair);
+        }
+
+        function updateAimTimer() {
+            timeLeft--;
+            document.getElementById('timer').textContent = timeLeft;
+            document.getElementById('gameProgress').style.width = ((30 - timeLeft) / 30 * 100) + '%';
+            
+            if (timeLeft <= 0) {
+                endAimGame();
+            }
+        }
+
+        function createTarget() {
+            if (!aimGameActive) return;
+            
+            const gameArea = document.getElementById('gameArea');
+            const target = document.createElement('div');
+            target.className = 'target';
+            
+            const size = Math.random() * 20 + 30;
+            target.style.width = size + 'px';
+            target.style.height = size + 'px';
+            
+            const maxX = gameArea.offsetWidth - size;
+            const maxY = gameArea.offsetHeight - size;
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+            
+            target.style.left = x + 'px';
+            target.style.top = y + 'px';
+            
+            target.onclick = function(e) {
+                e.stopPropagation();
+                hitTarget(this);
+            };
+            
+            gameArea.appendChild(target);
+            currentTargets.push(target);
+            
+            setTimeout(() => {
+                if (target.parentNode) {
+                    target.remove();
+                    currentTargets = currentTargets.filter(t => t !== target);
+                }
+            }, 2000);
+        }
+
+        function hitTarget(target) {
+            if (!aimGameActive) return;
+            
+            target.remove();
+            currentTargets = currentTargets.filter(t => t !== target);
+            hits++;
+            document.getElementById('hits').textContent = hits;
+        }
+
+        function updateCrosshair(e) {
+            const crosshair = document.getElementById('crosshair');
+            const rect = e.currentTarget.getBoundingClientRect();
+            crosshair.style.left = (e.clientX - rect.left - 10) + 'px';
+            crosshair.style.top = (e.clientY - rect.top - 10) + 'px';
+        }
+
+        function endAimGame() {
+            clearInterval(gameTimer);
+            clearInterval(targetTimer);
+            aimGameActive = false;
+            
+            currentTargets.forEach(target => target.remove());
+            currentTargets = [];
+            
+            const totalShots = hits + misses;
+            const accuracy = totalShots > 0 ? Math.round((hits / totalShots) * 100) : 0;
+            const totalScore = hits * 10 - misses * 5;
+            
+            document.getElementById('accuracy').textContent = accuracy + '%';
+            document.getElementById('totalScore').textContent = totalScore;
+            document.getElementById('finalHits').textContent = hits;
+            document.getElementById('aimResults').style.display = 'block';
+        }
+
+        // Секретные функции
+        // Позиционируем секретную кнопку в случайном свободном углу
+        function positionSecretButton() {
+            // Создаем массив всех возможных углов
+            const allCorners = [...corners];
+            
+            // Выбираем случайный угол
+            const randomIndex = Math.floor(Math.random() * allCorners.length);
+            
+            // Устанавливаем позицию кнопки
+            Object.assign(secretButton.style, allCorners[randomIndex]);
+            
+            // Всегда делаем кнопку невидимой, но она будет появляться при наведении
+            secretButton.style.opacity = '0';
+            secretButton.style.pointerEvents = 'auto';
+        }
+        
+        // Обработчик клика на секретную кнопку
+        function handleSecretButtonClick() {
+            // Если это четвертое нажатие или больше - всегда показываем окно ввода кода
+            if (secretClickCount >= 3) {
+                showModal('codeModal');
+                return;
+            }
+            
+            secretClickCount++;
+            
+            // Запускаем секретную последовательность
+            startSecretSequence();
+        }
+        
+        function startSecretSequence() {
+            // Скрываем кнопку (но она все равно будет появляться при наведении)
+            secretButton.style.opacity = '0';
+            secretButton.style.pointerEvents = 'none';
+            
+            // Ждем 2 секунды
+            setTimeout(() => {
+                // Плавно затемняем экран
+                darkOverlay.style.display = 'block';
+                setTimeout(() => {
+                    darkOverlay.classList.add('active');
+                }, 10);
+                
+                // Плавно запускаем музыку
+                secretMusic.volume = 0;
+                secretMusic.play();
+                fadeAudio(secretMusic, 0, 0.7, 1000);
+                
+                // Показываем первый текст
+                currentTextIndex = 0;
+                showSecretText();
+            }, 2000);
+        }
+        
+        function showSecretText() {
+            const texts = secretTexts[secretClickCount - 1];
+            
+            if (currentTextIndex < texts.length) {
+                secretText.textContent = texts[currentTextIndex];
+                secretText.style.display = 'block';
+                
+                // Плавно показываем текст
+                setTimeout(() => {
+                    secretText.classList.add('visible');
+                }, 10);
+                
+                // Добавляем обработчик клика для перехода к следующему тексту
+                secretClickHandler = handleSecretClick;
+                document.addEventListener('click', secretClickHandler);
+            }
+        }
+        
+        function handleSecretClick() {
+            const texts = secretTexts[secretClickCount - 1];
+            
+            // Плавно скрываем текущий текст
+            secretText.classList.remove('visible');
+            
+            setTimeout(() => {
+                currentTextIndex++;
+                
+                if (currentTextIndex < texts.length) {
+                    // Показываем следующий текст
+                    secretText.textContent = texts[currentTextIndex];
+                    setTimeout(() => {
+                        secretText.classList.add('visible');
+                    }, 10);
+                } else {
+                    // Завершаем последовательность
+                    endSecretSequence();
+                }
+            }, 500);
+        }
+        
+        function endSecretSequence() {
+            // Убираем обработчик клика
+            if (secretClickHandler) {
+                document.removeEventListener('click', secretClickHandler);
+                secretClickHandler = null;
+            }
+            
+            // Плавно скрываем текст
+            secretText.classList.remove('visible');
+            
+            setTimeout(() => {
+                secretText.style.display = 'none';
+                
+                // Плавно убираем затемнение
+                darkOverlay.classList.remove('active');
+                
+                // Плавно останавливаем музыку
+                fadeAudio(secretMusic, secretMusic.volume, 0, 1000, () => {
+                    secretMusic.pause();
+                    secretMusic.currentTime = 0;
+                });
+                
+                setTimeout(() => {
+                    darkOverlay.style.display = 'none';
+                    
+                    // Перемещаем кнопку в новый свободный угол
+                    positionSecretButton();
+                }, 1000);
+            }, 500);
+        }
+        
+        // Функция для плавного изменения громкости аудио
+        function fadeAudio(audio, fromVolume, toVolume, duration, callback) {
+            const startTime = Date.now();
+            const interval = 50;
+            const steps = duration / interval;
+            const stepSize = (toVolume - fromVolume) / steps;
+            let currentStep = 0;
+            
+            function updateVolume() {
+                currentStep++;
+                const elapsed = Date.now() - startTime;
+                if (elapsed < duration) {
+                    audio.volume = fromVolume + (stepSize * currentStep);
+                    setTimeout(updateVolume, interval);
+                } else {
+                    audio.volume = toVolume;
+                    if (callback) callback();
+                }
+            }
+            
+            updateVolume();
+        }
+        
+        // Проверка кода
+        function checkCode() {
+            const codeInput = document.getElementById('codeInput');
+            const codeError = document.getElementById('codeError');
+            
+            if (codeInput.value === '2016') {
+                // Правильный код - перенаправляем
+                window.location.href = 'after_the_code.html';
+            } else {
+                // Неправильный код - показываем ошибку
+                codeError.style.display = 'block';
+                setTimeout(() => {
+                    codeError.style.display = 'none';
+                }, 3000);
+            }
+        }
+        
+        // Закрытие модального окна кода
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            if (modalId === 'codeModal') {
+                document.getElementById('codeInput').value = '';
+                document.getElementById('codeError').style.display = 'none';
+            }
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.page').forEach(page => {
+                page.style.display = 'none';
+            });
+            document.getElementById('trips').style.display = 'block';
+            
+            // Устанавливаем начальное состояние - лампочка включена, дневной фон
+            document.getElementById('lampImage').src = 'lamp_on.png';
+            document.body.classList.add('light-theme');
+            isLampOn = true;
+            
+            // Добавляем обработчик промахов для AimLabs
+            document.getElementById('gameArea').addEventListener('click', function(e) {
+                if (aimGameActive && e.target === this) {
+                    misses++;
+                    document.getElementById('misses').textContent = misses;
+                }
+            });
+
+            // Добавляем обработчики звуков для всех кнопок
+            document.querySelectorAll('button, .side-btn, .game-btn, .bet-field, .target').forEach(button => {
+                button.addEventListener('mouseover', playHoverSound);
+            });
+
+            // Инициализация секретной кнопки
+            positionSecretButton();
+            secretButton.addEventListener('click', handleSecretButtonClick);
+
+            // Обработчик завершения музыки для повторного воспроизведения
+            secretMusic.addEventListener('ended', function() {
+                this.currentTime = 0;
+                this.play();
+            });
+        });
+    </script>
+</body>
+</html>
